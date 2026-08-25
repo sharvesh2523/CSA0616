@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <limits.h>
+
+int sum(int freq[], int i, int j) {
+    int s = 0;
+    while (i <= j)
+        s += freq[i++];
+    return s;
+}
+
+int main() {
+    int n, i, j, k, L;
+    int freq[20], cost[20][20];
+
+    printf("Enter number of keys: ");
+    scanf("%d", &n);
+
+    printf("Enter frequencies:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &freq[i]);
+
+    for (i = 0; i < n; i++)
+        cost[i][i] = freq[i];
+
+    for (L = 2; L <= n; L++) {
+        for (i = 0; i <= n - L; i++) {
+            j = i + L - 1;
+            cost[i][j] = INT_MAX;
+
+            for (k = i; k <= j; k++) {
+                int c = 0;
+
+                if (k > i)
+                    c += cost[i][k - 1];
+
+                if (k < j)
+                    c += cost[k + 1][j];
+
+                c += sum(freq, i, j);
+
+                if (c < cost[i][j])
+                    cost[i][j] = c;
+            }
+        }
+    }
+
+    printf("Minimum cost of OBST = %d\n", cost[0][n - 1]);
+    printf("Time Complexity: O(n^3)\n");
+
+    return 0;
+}
