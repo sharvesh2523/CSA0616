@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+struct Node {
+    char ch;
+    int freq;
+};
+
+int main() {
+    struct Node a[50], temp;
+    int n, i, j;
+
+    printf("Enter number of characters: ");
+    scanf("%d", &n);
+
+    printf("Enter character and frequency:\n");
+
+    for (i = 0; i < n; i++)
+        scanf(" %c %d", &a[i].ch, &a[i].freq);
+
+    // Sort according to frequency
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (a[i].freq > a[j].freq) {
+                temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+
+    printf("\nCharacters sorted according to frequency:\n");
+
+    for (i = 0; i < n; i++)
+        printf("%c : %d\n", a[i].ch, a[i].freq);
+
+    printf("\nHuffman coding normally requires a min-heap/tree.\n");
+    printf("Time Complexity using min-heap: O(n log n)\n");
+
+    return 0;
+}
